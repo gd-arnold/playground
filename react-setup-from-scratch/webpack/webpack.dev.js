@@ -1,4 +1,12 @@
+const ReactRefreshPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
 module.exports = {
     mode: 'development',
-    devtool: 'cheap-module-source-map'
+    devServer: {
+        hot: true
+    },
+    devtool: 'cheap-module-source-map',
+    plugins: [
+        new ReactRefreshPlugin()
+    ]
 }
