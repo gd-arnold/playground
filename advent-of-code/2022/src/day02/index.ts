@@ -1,45 +1,31 @@
 import { readFileSync } from "fs";
 
-type shape = "A" | "B" | "C" | "X" | "Y" | "Z";
-
-function convertToNumber(entry: shape) {
-    switch (entry) {
-        case "A":
-        case "X":
-            return 1;
-        case "B":
-        case "Y":
-            return 2;
-        case "C":
-        case "Z":
-            return 3;
-    }
-}
-
-function roundOutcome(diff: number) {
-    switch (diff) {
-        case 0:
-            return 3;
-        case -1:
-        case  2:
-            return 6;
-        default:
-            return 0;
-    }
-}
-
-function calculateScore(round: string) {
-    const [opponent, response] = (round.split(" ") as [shape, shape])
-        .map(entry => convertToNumber(entry));
-
-    return roundOutcome(opponent - response) + response;
-}
-
 const data = readFileSync("./input", "utf8");
 
-const part1 = data
-    .trim()
-    .split("\n")
-    .reduce((sum, round) => sum += calculateScore(round), 0);
+const shapeToScore = new Map<string, number>([["X", 1], ["Y", 2], ["Z", 3]]);
+const outcomeToScore = new Map<string, number>([
+        ["AX", 3], ["AY", 6], ["AZ", 0],
+        ["BX", 0], ["BY", 3], ["BZ", 6],
+        ["CX", 6], ["CY", 0], ["CZ", 3]
+]);
+const instructionsToShape = new Map<string, string>([
+        ["AX", "Z"], ["AY", "X"], ["AZ", "Y"],
+        ["BX", "X"], ["BY", "Y"], ["BZ", "Z"],
+        ["CX", "Y"], ["CY", "Z"], ["CZ", "X"]
+]);
 
-console.log(part1);
+const games = data.trim().split("\n");
+
+const part1 = games.reduce((sum, game) => sum +
+    (shapeToScore.get(game[2]) as number) +
+    (outcomeToScore.get(`${game[0]}${game[2]}`) as number), 0);
+
+const part2 = games.reduce((sum, game) => {
+    const res = instructionsToShape.get(`${game[0]}${game[2]}`) as string;
+
+    return sum +
+        (shapeToScore.get(res) as number) +
+        (outcomeToScore.get(`${game[0]}${res}`) as number)
+}, 0);
+
+console.log(part1, part2);
