@@ -1,6 +1,6 @@
-import './styles.css'
-import image from './react.png'
-import { Counter } from './Counter';
+import "./styles.css";
+import image from "./react.png";
+import { Counter } from "./Counter";
 
 export const App = () => {
     return (
@@ -12,5 +12,4 @@ export const App = () => {
             <Counter />
         </>
     );
-
-}
+};
