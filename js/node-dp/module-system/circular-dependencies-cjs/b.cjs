@@ -1,6 +1,6 @@
 exports.loaded = false;
 
-const a = require("./a.js");
+const a = require("./a.cjs");
 
 module.exports = {
     a,
