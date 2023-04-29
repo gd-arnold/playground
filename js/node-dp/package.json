@@ -1,0 +1,11 @@
+{
+  "name": "node-design-patterns",
+  "version": "1.0.0",
+  "description": "Code and solutions to exercises from Node.js Design Patterns, Third edition",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC"
+}
