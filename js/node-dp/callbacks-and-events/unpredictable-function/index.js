@@ -1,4 +1,4 @@
-import { readFile } from "fs";
+import { readFile, readFileSync } from "fs";
 
 const cache = new Map();
 
@@ -12,6 +12,27 @@ function inconsistentRead(filename, cb) {
             cache.set(filename, data);
             cb(data);
         });
+    }
+}
+
+function consistentReadAsync(filename, cb) {
+    if (cache.has(filename)) {
+        process.nextTick(() => cb(cache.get(filename)));
+    } else {
+        readFile(filename, "utf8", (err, data) => {
+            cache.set(filename, data);
+            cb(data);
+        });
+    }
+}
+
+function consistentReadSync(filename) {
+    if (cache.has(filename)) {
+        return cache.get(filename);
+    } else {
+        const data = readFileSync(filename, "utf8");
+        cache.set(filename, data);
+        return data;
     }
 }
 
