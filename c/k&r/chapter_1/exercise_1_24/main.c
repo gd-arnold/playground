@@ -69,4 +69,8 @@ void checkSyntax(char text[]) {
     if (parentheses) printf("Invalid parentheses\n");
     if (brackets) printf("Invalid brackets\n");
     if (braces) printf("Invalid braces\n");
+    if (inSingleQuotes) printf("Invalid single quotes\n");
+    if (inDoubleQuotes) printf("Invalid double quotes\n");
+    if (inLineComment) printf("Invalid line comment\n");
+    if (inBlockComment) printf("Invalid block comment\n");
 }
