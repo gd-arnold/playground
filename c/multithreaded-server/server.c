@@ -18,6 +18,7 @@ void initializeThreadPool(SocketsQueue* socketsQueue);
 void* threadFn(void* socketsQueue);
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
 
 int main() {
     int serverSocketFD = socket(AF_INET, SOCK_STREAM, 0);
@@ -43,6 +44,7 @@ int main() {
 
         pthread_mutex_lock(&mutex);
         enqueue(clientSocketFD, socketsQueue);
+        pthread_cond_signal(&condition);
         pthread_mutex_unlock(&mutex);
     }
 
@@ -62,6 +64,11 @@ void* threadFn(void* socketsQueue) {
     while (true) {
         pthread_mutex_lock(&mutex);
         SocketsQueueNode* node = peak(sockets);
+
+        if (node == NULL) {
+            pthread_cond_wait(&condition, &mutex);
+            node = peak(sockets);
+        }
 
         if (node != NULL) {
             int clientSocketFD = node->socketFD;
