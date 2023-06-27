@@ -8,7 +8,7 @@
 #include <sys/epoll.h>
 
 #define PORT 8080
-#define MAXFDS 16 * 1024
+#define MAXFDS 1024
 
 int server_init(int port)
 {
@@ -86,9 +86,6 @@ int main(int argc, char **argv)
                     char buffer[1024];
                     int nbytes = recv(client_fd, buffer, sizeof(buffer), 0);
 
-                    struct epoll_event event = {0};
-                    event.data.fd = client_fd;
-
                     if (nbytes == 0)
                     {
                         // Client disconnected
@@ -98,9 +95,9 @@ int main(int argc, char **argv)
                     }
 
                     if (errno == EAGAIN || errno == EWOULDBLOCK)
-                        event.events = EPOLLIN;
+                        event.events |= EPOLLIN;
                     else
-                        event.events = EPOLLOUT;
+                        event.events |= EPOLLOUT;
 
                     epoll_ctl(epoll_fd, EPOLL_CTL_MOD, client_fd, &event);
                     printf("Received %d bytes from client %d\n", nbytes, client_fd);
