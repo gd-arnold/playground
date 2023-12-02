@@ -10,25 +10,22 @@ int main(int argc, char *argv[])
     FILE *input = fopen("input", "r");
 
     unsigned sum = 0;
-    unsigned char first = 0;
-    unsigned char second = 0;
+    unsigned first = 0;
+    unsigned second = 0;
 
     while (fgets(buffer, MAXLINE, input))
     {
         for (unsigned i = 0; buffer[i] != '\n'; i++)
         {
             if (isdigit(buffer[i])) {
-                if (!first) {
-                    first = buffer[i];
-                    second = buffer[i];
-                } else {
-                    second = buffer[i];
-                }
+                if (!first)
+                    first = buffer[i] - '0';
+
+                second = buffer[i] - '0';
             }
         }
 
-        printf("%c %c\n", first, second);
-        sum += ((first - '0') * 10) + (second - '0');
+        sum += first * 10 + second;
         first = second = 0;
     }
 
