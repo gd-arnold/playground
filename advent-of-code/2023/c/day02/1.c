@@ -26,10 +26,9 @@ int isGamePossible(char* game)
         // pos points to color name
         pos++;
 
-        if (num != 0 && 
-                ((*pos == 'r' && num > RED) || 
-                 (*pos == 'g' && num > GREEN) ||
-                 (*pos == 'b' && num > BLUE)))
+        if (((*pos == 'r' && num > RED) || 
+            (*pos == 'g' && num > GREEN) ||
+            (*pos == 'b' && num > BLUE)))
             return 0;
     }
 
