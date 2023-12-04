@@ -13,7 +13,8 @@ static void fill_matrix(unsigned rows, char matrix[][rows], FILE* input, char* b
 
 static unsigned calc_sum(unsigned rows, unsigned cols, char matrix[cols][rows]);
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     FILE* input = fopen("input", "r");
 
     char buffer[MAXLEN];
