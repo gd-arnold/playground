@@ -4,19 +4,15 @@
 
 #define MAXLINE 128
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     char buffer[MAXLINE];
-    FILE *input = fopen("input", "r");
+    FILE* input = fopen("input", "r");
 
-    unsigned sum = 0;
-    unsigned first = 0;
-    unsigned second = 0;
+    unsigned sum, first, second;
+    sum = first = second = 0;
 
-    while (fgets(buffer, MAXLINE, input))
-    {
-        for (unsigned i = 0; buffer[i] != '\n'; i++)
-        {
+    while (fgets(buffer, MAXLINE, input)) {
+        for (unsigned i = 0; buffer[i] != '\n'; i++) {
             if (isdigit(buffer[i])) {
                 if (!first)
                     first = buffer[i] - '0';
