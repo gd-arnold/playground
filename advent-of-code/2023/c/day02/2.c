@@ -5,7 +5,7 @@
 
 #define MAXLEN 256
 
-unsigned calculatePower(char* game)
+unsigned calc_power(char* game)
 {
     unsigned red = 0;
     unsigned green = 0;
@@ -13,15 +13,11 @@ unsigned calculatePower(char* game)
 
     char *pos = strchr(game, ':') + 2;
 
-    while (*pos != '\0')
-    {
+    while (*pos != '\0') {
         // parse number
         unsigned num = 0;
         while(isdigit(*pos))
-        {
-            num = num * 10 + ((*pos) - '0');
-            pos++;
-        }
+            num = num * 10 + (*(pos++) - '0');
 
         // pos points to color name
         pos++;
@@ -37,7 +33,7 @@ unsigned calculatePower(char* game)
     return red * green * blue;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     FILE *input = fopen("input", "r");
     char buffer[MAXLEN];
@@ -45,7 +41,7 @@ int main(int argc, char *argv[])
     unsigned sum = 0;
 
     for (unsigned i = 1; fgets(buffer, MAXLEN, input); i++)
-        sum += calculatePower(buffer);
+        sum += calc_power(buffer);
 
     printf("%d\n", sum);
 
