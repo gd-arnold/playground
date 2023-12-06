@@ -108,15 +108,9 @@ fill_ranges(Range** ranges[], unsigned ranges_count[], FILE* input, char buffer[
     for (int range = -1, range_indx = 0; fgets(buffer, size, input);) {
         if (isdigit(buffer[0])) {
             Range* r = (Range*) malloc(sizeof(Range));
+            sscanf(buffer, "%ld %ld %ld\n", &r->dest, &r->source, &r->length);
 
-            r->dest = atol(strtok(buffer, " "));
-            r->source = atol(strtok(NULL, " "));
-            r->length = atol(strtok(NULL, "\n"));
-
-            ranges[range][range_indx] = r;
-
-            range_indx++;
-
+            ranges[range][range_indx++] = r;
         } else if (buffer[0] != '\n') {
             if (range >= 0)
                 ranges[range][range_indx] = NULL;
