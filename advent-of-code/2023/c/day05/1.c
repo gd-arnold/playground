@@ -26,6 +26,9 @@ fill_seeds(unsigned seeds_count, unsigned long seeds[seeds_count], FILE* input, 
 static void
 fill_ranges(Range** ranges[], unsigned ranges_count[], FILE* input, char buffer[], unsigned size);
 
+static void
+free_ranges(Range** ranges[], unsigned length);
+
 static unsigned long 
 map(Range* r[], unsigned long num); 
 
@@ -61,6 +64,7 @@ main(int argc, char* argv[])
 
     printf("%ld\n", lowest);
 
+    free_ranges(ranges, RANGES);
     return 0;
 }
 
@@ -126,6 +130,16 @@ fill_ranges(Range** ranges[], unsigned ranges_count[], FILE* input, char buffer[
 
     rewind(input);
 
+}
+
+static void
+free_ranges(Range** ranges[], unsigned length)
+{
+    for (unsigned i = 0; i < length; i++) {
+        for (unsigned j = 0; ranges[i][j] != NULL; j++)
+            free(ranges[i][j]);
+        free(ranges[i]);
+    }
 }
 
 static unsigned long
