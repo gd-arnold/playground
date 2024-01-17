@@ -12,6 +12,9 @@ void insertion_sort(int32_t a[], uint32_t n);
 int32_t* merge_sort(int32_t arr[], uint32_t n);
 int32_t* merge(int32_t a[], uint32_t na, int32_t b[], uint32_t nb);
 
+void quick_sort(int32_t arr[], uint32_t start, uint32_t end);
+uint32_t partition(int32_t arr[], uint32_t start, uint32_t end);
+
 void swap(int32_t* a, int32_t* b);
 void print_arr(int32_t a[], uint32_t n);
 
@@ -20,9 +23,8 @@ int main(int argc, char* argv[])
     int32_t a[] = {3, -3, 1, 9, 14, 2, 8, 17, 2, 4, 3, -2, 8, -1};
     uint32_t n = sizeof(a) / sizeof(a[0]);
 
-    int32_t* sorted = merge_sort(a, n);
-    print_arr(sorted, n);
-    free(sorted);
+    quick_sort(a, 0, n - 1);
+    print_arr(a, n);
     
     return EXIT_SUCCESS;
 }
@@ -107,8 +109,6 @@ int32_t* merge_sort(int32_t arr[], uint32_t n)
     return merged;
 }
 
-// Time Complexity: O(na + nb)
-// Space Complexity: O(na + nb)
 int32_t* merge(int32_t a[], uint32_t na, int32_t b[], uint32_t nb)
 {
     int32_t* merged = (int32_t*) malloc(sizeof(int32_t) * (na + nb));
@@ -130,6 +130,33 @@ int32_t* merge(int32_t a[], uint32_t na, int32_t b[], uint32_t nb)
         merged[merged_i++] = b[b_i++];
 
     return merged;
+}
+
+void quick_sort(int32_t arr[], uint32_t start, uint32_t end)
+{
+    if (start >= end)
+        return;
+
+    uint32_t p_idx = partition(arr, start, end);
+    quick_sort(arr, start, p_idx - 1);
+    quick_sort(arr, p_idx + 1, end);
+}
+
+uint32_t partition(int32_t arr[], uint32_t start, uint32_t end)
+{
+    uint32_t p_idx = start;
+    int32_t pivot = arr[end];
+
+    for (uint32_t i = start; i < end; i++) {
+        if (arr[i] <= pivot) {
+            swap(&arr[i], &arr[p_idx]);
+            p_idx++;
+        }
+    }
+
+    swap(&arr[end], &arr[p_idx]);
+
+    return p_idx;
 }
 
 void print_arr(int32_t a[], uint32_t n)
