@@ -5,6 +5,7 @@
 
 void selection_sort(int32_t a[], uint32_t n);
 void bubble_sort(int32_t a[], uint32_t n);
+void insertion_sort(int32_t a[], uint32_t n);
 
 void swap(int32_t* a, int32_t* b);
 void print_arr(int32_t a[], uint32_t n);
@@ -14,7 +15,7 @@ int main(int argc, char* argv[])
     int32_t a[] = {3, -3, 1, 9, 2, 8, 17, 2, 4, 3, -2, 8};
     uint32_t n = sizeof(a) / sizeof(a[0]);
 
-    bubble_sort(a, n);
+    insertion_sort(a, n);
     print_arr(a, n);
 
     return EXIT_SUCCESS;
@@ -50,6 +51,16 @@ void bubble_sort(int32_t a[], uint32_t n)
         }
 
         if (is_already_sorted) break;
+    }
+}
+
+// Time Complexity: O(n^2)
+// Space Complexity: O(1)
+void insertion_sort(int32_t a[], uint32_t n)
+{
+    for (uint32_t i = 1; i < n; i++) {
+        for (uint32_t j = i; j > 0 && a[j - 1] > a[j]; j--)
+            swap(&a[j], &a[j - 1]);
     }
 }
 
