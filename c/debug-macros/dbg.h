@@ -36,4 +36,6 @@
 #define check_debug(A, M, ...) if(!(A)) {\
     debug(M, ##__VA_ARGS__); errno = 0; goto error; }
 
+#define size_of_attribute(Struct, Attribute) sizeof(((Struct *)0)->Attribute)
+
 #endif
