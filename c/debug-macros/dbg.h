@@ -1,5 +1,4 @@
-#ifndef _DBG_H
-#define _DBG_H
+#pragma once
 
 #include <stdio.h>
 #include <errno.h>
@@ -37,5 +36,3 @@
     debug(M, ##__VA_ARGS__); errno = 0; goto error; }
 
 #define size_of_attribute(Struct, Attribute) sizeof(((Struct *)0)->Attribute)
-
-#endif
