@@ -36,3 +36,16 @@
     debug(M, ##__VA_ARGS__); errno = 0; goto error; }
 
 #define size_of_attribute(Struct, Attribute) sizeof(((Struct *)0)->Attribute)
+
+#define expect(A, M, ...)\
+    if (!(A)) {\
+        printf("\033[91mFailed: ");\
+        printf("[ERROR] (%s:%d) " M "\n", __FILE__, __LINE__, ##__VA_ARGS__);\
+        exit(1);\
+    }\
+
+#define TEST(F) \
+    printf("[TEST] (%s:%d) %s ...\n", __FILE__, __LINE__, #F);\
+    F();\
+    printf("\x1b[32mPassed\033[0m\n");\
+
